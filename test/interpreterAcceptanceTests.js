@@ -70,7 +70,7 @@ describe("Interpreter", function () {
         // TODO: Add more tests
 
     });
-
+/*
     describe('Interpreter Rules', function () {
 
         it('hijo(pepe, juan) should be true', function () {
@@ -86,8 +86,6 @@ describe("Interpreter", function () {
         // TODO: Add more tests
 
     });
-
+*/
 
 });
-
-
