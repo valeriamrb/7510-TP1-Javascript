@@ -29,6 +29,10 @@ var Interpreter = function () {
     }
 
     this.checkQuery = function (params) {
+        //Parseo la consulta.
+        var unParser = new Parser();
+        console.log("La consulta es:");
+        console.log(unParser.parsearConsulta(params));
         return true;
     }
 

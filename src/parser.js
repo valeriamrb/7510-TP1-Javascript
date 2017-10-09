@@ -1,3 +1,5 @@
+var Consulta = require('../src/consulta');
+var Expresion = require('../src/expresion');
 var Definicion = require('../src/definicion');
 var Regla = require('../src/regla');
 
@@ -14,7 +16,14 @@ function Parser() {
     }
 
     this.parsearConsulta = function(expresion) {
-
+      var vector1 = expresion.replace(/\)$/, "");
+      console.log("El vector1 es:");
+      console.log(vector1);
+      var vector2 = vector1.split('(');
+      var vector3 = vector2[1].split(',');
+      console.log("El vector3 es:");
+      console.log(vector3);
+      return new Consulta(vector2[0], vector3);
     }
 
     this.esDefinicion = function(expresion) {
@@ -67,8 +76,10 @@ function Parser() {
       for (var i = 0; i < definiciones.length; i+=1) {
         var nombreRegla = definiciones[i][0];
         definiciones[i].shift()
-        listaDef[i] = new Definicion(nombreRegla,definiciones[i]);
+        listaDef[i] = new Expresion(nombreRegla,definiciones[i]);
       }
+      console.log("La lista de definiciones de la regla es:");
+      console.log(listaDef);
       //Armo el objeto regla.
       return new Regla(aux1[0], parametros, listaDef);
     }
