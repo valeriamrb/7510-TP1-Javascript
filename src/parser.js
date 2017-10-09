@@ -23,6 +23,15 @@ function Parser() {
       return new Consulta(vector2[0], vector3);
     }
 
+    this.esConsultaValida = function(expresion){
+      var vector1 = expresion.replace(/\)$/, "");
+      var vector2 = vector1.split('(');
+      if(vector2.length == 2){
+        return true;
+      }
+      return false;
+    }
+
     this.esDefinicion = function(expresion) {
       var elementos = expresion.split('(');
       if(elementos.length == 2){
@@ -75,8 +84,8 @@ function Parser() {
         definiciones[i].shift()
         listaDef[i] = new Expresion(nombreRegla,definiciones[i]);
       }
-      console.log("La lista de definiciones de la regla es:");
-      console.log(listaDef);
+//      console.log("La lista de definiciones de la regla es:");
+  //    console.log(listaDef);
       //Armo el objeto regla.
       return new Regla(aux1[0], parametros, listaDef);
     }

@@ -40,7 +40,6 @@ describe("Interpreter", function () {
         // runs after each test in this block
     });
 
-
     describe('Interpreter Facts', function () {
 
         it('add(one, one, two) should be true', function () {
@@ -68,6 +67,4 @@ describe("Interpreter", function () {
             assert(interpreter.checkQuery('add(one, zero, one)'));
         });
     });
-
-
 });

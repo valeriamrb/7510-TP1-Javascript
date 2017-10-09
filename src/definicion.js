@@ -4,7 +4,7 @@ function Definicion(nombre, argumentos) {
 
     this.comparar = function(consulta) {
       ///Debug
-      console.log("##Estoy en definicion.comparar")
+  /*    console.log("##Estoy en definicion.comparar")
       console.log("Nombre Consulta:");
       console.log(consulta.getNombre());
       console.log("Argumentos Consulta:");
@@ -12,7 +12,7 @@ function Definicion(nombre, argumentos) {
       console.log("Nombre Definicion:");
       console.log(this.nombre);
       console.log("Argumentos Definicion:");
-      console.log(this.argumentos);
+      console.log(this.argumentos);*/
       ///Fin debug
       if(this.nombre == consulta.getNombre() && this.argumentos == consulta.getStringArgumentos()) {
           return true;

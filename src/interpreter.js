@@ -11,8 +11,6 @@ var Interpreter = function () {
 
 	   for (var i = 0; i < params.length; i+=1) {
         if(this.unParser.esDefinicion(params[i])) {
-                console.log("La linea '" + i + "es definicion");
-                //console.log(this.unParser.parsearDefinicion(params[i]));
                 var definicion = this.unParser.parsearDefinicion(params[i]);
                 var clave = this.diccionarioDefiniciones[definicion.getNombre()];
                 if( clave == undefined ) {
@@ -25,24 +23,26 @@ var Interpreter = function () {
                   this.diccionarioDefiniciones[definicion.getNombre()].push(definicion);
                 }
         } else if(this.unParser.esRegla(params[i])) {
-                console.log("La linea '" + i + "es regla");
-                //console.log(this.unParser.parsearRegla(params[i]));
                 var unaRegla = this.unParser.parsearRegla(params[i]);
-                //console.log("####La regla es:");
-                //console.log(unaRegla.getNombre());
                 this.diccionarioReglas[unaRegla.getNombre()] = unaRegla;
         } else {
           //Base mal formada
           return false;
         }
 	   }
-     console.log("El diccionario de definiciones es:");
+/*     console.log("El diccionario de definiciones es:");
      console.log(this.diccionarioDefiniciones);
      console.log("El diccionario de reglas es:");
-     console.log(this.diccionarioReglas);
+     console.log(this.diccionarioReglas);*/
     }
 
     this.checkQuery = function (params) {
+        //Verifico si la consulta es valida. Si no lo es retorno null
+        console.log("Verifico si la consulta es valida");
+        if(!this.unParser.esConsultaValida(params)){
+          console.log("La consulta no es valida");
+          return null;
+        }
         //Parseo la consulta.
         var consulta = this.unParser.parsearConsulta(params);
         console.log("#######################################");
@@ -51,17 +51,17 @@ var Interpreter = function () {
         console.log(consulta);
         var claveConsulta = consulta.getNombre();
 
+
         //Busco si la consulta existe en el diccionario de definiciones.
         var definiciones = this.diccionarioDefiniciones[claveConsulta];
         if( definiciones != undefined){
-          console.log("Existe la definicion en el diccionario, su nombre es:");
-          console.log(claveConsulta);
+          //console.log("Existe la definicion en el diccionario, su nombre es:");
+          //console.log(claveConsulta);
           //Recorro la lista de definiciones asociadas a esa clave para
           //comparar si la consulta es verdadera.
           for (var i = 0; i < definiciones.length; i+=1) {
-            console.log("Definicion nro:" + i);
             if(definiciones[i].comparar(consulta)) {
-              //Si encontre la definicion, la consulta es verdadera.
+              //Si encontre la definicion, la co  console.log("Verifico si la consulta es valida");nsulta es verdadera.
               console.log("La definicion es true.");
               return true;
             }
