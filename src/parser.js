@@ -4,8 +4,6 @@ var Definicion = require('../src/definicion');
 var Regla = require('../src/regla');
 
 function Parser() {
-    this.saludo = "hola";
-
     this.parsear = function(expresion) {
       if(esDefinicion(expresion)) {
           parsearDefinicion(expresion);
@@ -60,7 +58,6 @@ function Parser() {
 
     this.parsearRegla = function(expresion) {
       "Filtra un string de regla y devuelve un objeto Regla con los valores correspondientes a la expresion."
-      "Ej: [[hijo] [X Y] [varon X] [padre Y X]]"
       var vector1 = expresion.replace(/\)\.$/, "");
       //Quito los espacios.
       var vector2 = vector1.replace(/\s/g, "");
@@ -74,9 +71,6 @@ function Parser() {
       for (var i = 0; i < definiciones.length; i+=1) {
         definiciones[i] = definiciones[i].split(/[\(\),]/);
       }
-
-      //var listaRegla = [aux1[0]].concat([aux2]).concat(aux3);
-
       //Creo una lista de definiciones.
       var listaDef = [];
       for (var i = 0; i < definiciones.length; i+=1) {
@@ -84,12 +78,30 @@ function Parser() {
         definiciones[i].shift()
         listaDef[i] = new Expresion(nombreRegla,definiciones[i]);
       }
-//      console.log("La lista de definiciones de la regla es:");
-  //    console.log(listaDef);
       //Armo el objeto regla.
       return new Regla(aux1[0], parametros, listaDef);
     }
 
+    this.validarBase = function(listaDatos) {
+      //Valida si la base de datos esta formada correctamente.
+      var listaDefValidas = [];
+      var listaReglasValidas = [];
+      for (var i = 0; i < listaDatos.length; i+=1) {
+         if(this.esDefinicion(listaDatos[i])) {
+           listaDefValidas.push(listaDatos[i]);
+         } else if(this.esRegla(listaDatos[i])) {
+           listaReglasValidas.push(listaDatos[i]);
+         }
+      }
+      var cantidadDefValidas = listaDefValidas.length;
+      var cantidadReglasValidas = listaReglasValidas.length;
+      var cantidadLineasValidas = cantidadDefValidas + cantidadReglasValidas;
+      var cantidadLineasTotales = listaDatos.length;
+      if(cantidadLineasTotales == cantidadLineasValidas){
+        return true;
+      }
+      return false;
+    }
 }
 
 module.exports = Parser;

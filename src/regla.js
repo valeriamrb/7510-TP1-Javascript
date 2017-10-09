@@ -11,8 +11,6 @@ function Regla(nombre, argumentos, listaDefiniciones) {
         //Si el nombre es igual evaluo la regla, reemplazando las definiciones
         //de la misma por los argumentos de la consulta.
         var definicionesFormadas = this.formarRegla(consulta);
-        //console.log("La lista de definicionesFormadas es:");
-        //console.log(definicionesFormadas);
         //Busco si las definiciones que componen la regla existen y son verdaderas
         for (var i = 0; i < definicionesFormadas.length; i+=1) {
             var definiciones = diccionario[definicionesFormadas[i].getNombre()]
@@ -20,15 +18,10 @@ function Regla(nombre, argumentos, listaDefiniciones) {
               //Si no existe la definicion en el diccionario, la regla no es verdadera
               return false;
             } else {
-              //console.log("Existe el nombre de la definicion.");
               //Si existe el nombre de la definicion, busco si se corresponden
               //los parametros.
               var existeDefinicion = false;
               for (var j = 0; j < definiciones.length; j+=1) {
-                //console.log("Quiero comparar:");
-                //console.log(definiciones[j]);
-                //console.log("con:");
-                //console.log(definicionesFormadas[i]);
                 if(definiciones[j].comparar(definicionesFormadas[i])) {
                   existeDefinicion = true;
                   break;
