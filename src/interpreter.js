@@ -73,15 +73,20 @@ var Interpreter = function () {
           //Si no existe la definicion, busco en el diccionario de reglas.
           var regla = this.diccionarioReglas[claveConsulta];
           if( regla != undefined){
+            console.log("Existe la regla en el diccionario, su nombre es:");
+            console.log(claveConsulta);
             //Si existe la regla, la evaluo para ver si la consulta es verdadera
-            if(regla.comparar(consulta, diccionarioDefiniciones)) {
+            if(regla.comparar(consulta, this.diccionarioDefiniciones)) {
               //Si la regla evaluada da true, la consulta es verdadera
+              console.log("La regla es true.");
               return true;
             }
             //Si la regla evaluada da false, la consulta es falsa
+            console.log("La regla es false porque las definiciones son falsas.");
             return false;
           }
           //Si no existe la regla, la consulta es falsa.
+          console.log("La regla es false, no existe.");
           return false;
         }
     }

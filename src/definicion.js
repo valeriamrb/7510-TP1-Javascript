@@ -4,6 +4,7 @@ function Definicion(nombre, argumentos) {
 
     this.comparar = function(consulta) {
       ///Debug
+      console.log("##Estoy en definicion.comparar")
       console.log("Nombre Consulta:");
       console.log(consulta.getNombre());
       console.log("Argumentos Consulta:");
@@ -21,6 +22,11 @@ function Definicion(nombre, argumentos) {
 
     this.getNombre = function() {
       return this.nombre;
+    }
+
+    this.getStringArgumentos = function() {
+      //Devuelve los argumentos en un string separados por coma.
+      return this.argumentos.join(", ");
     }
 }
 

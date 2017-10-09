@@ -10,21 +10,26 @@ function Regla(nombre, argumentos, listaDefiniciones) {
         }
         //Si el nombre es igual evaluo la regla, reemplazando las definiciones
         //de la misma por los argumentos de la consulta.
-        var definicionesFormadas = formarRegla(consulta);
-
+        var definicionesFormadas = this.formarRegla(consulta);
+        console.log("La lista de definicionesFormadas es:");
+        console.log(definicionesFormadas);
         //Busco si las definiciones que componen la regla existen y son verdaderas
         for (var i = 0; i < definicionesFormadas.length; i+=1) {
-            var definicion = diccionario[definicionesFormadas[i].getNombre()]
-            if( definicion == undefined ) {
+            var definiciones = diccionario[definicionesFormadas[i].getNombre()]
+            if( definiciones == undefined ) {
               //Si no existe la definicion en el diccionario, la regla no es verdadera
               return false;
             } else {
+              console.log("Existe el nombre de la definicion.");
               //Si existe el nombre de la definicion, busco si se corresponden
               //los parametros.
-              listaDef = diccionario[definicionesFormadas[i].getNombre()]
               var existeDefinicion = false;
-              for (var i = 0; i < listaDef.length; i+=1) {
-                if(listaDef[i].comparar(consulta)) {
+              for (var j = 0; j < definiciones.length; j+=1) {
+                console.log("Quiero comparar:");
+                console.log(definiciones[j]);
+                console.log("con:");
+                console.log(definicionesFormadas[i]);
+                if(definiciones[j].comparar(definicionesFormadas[i])) {
                   existeDefinicion = true;
                   break;
                 }
@@ -35,7 +40,7 @@ function Regla(nombre, argumentos, listaDefiniciones) {
               }
             }
         }
-        //Si todas las definiciones eran verdaderas, la regla no se cumple.
+        //Si todas las definiciones eran verdaderas, la regla se cumple.
         return true;
     }
 
@@ -45,13 +50,13 @@ function Regla(nombre, argumentos, listaDefiniciones) {
       var definiciones = []
       var argumentosConsulta = consulta.getArgumentos();
 
-      for (var i = 0; i < argumentosGenericos.length; i+=1) {
-          mapaArgumentos.argumentosGenericos[i] = argumentosConsulta[i];
+      for (var i = 0; i < this.argumentosGenericos.length; i+=1) {
+          mapaArgumentos[this.argumentosGenericos[i]] = argumentosConsulta[i];
       }
 
       //Evaluo las definiciones.
-      for (var i = 0; i < listaDefiniciones.length; i+=1) {
-          definiciones[i] = listaDefiniciones[i].evaluar(mapaArgumentos);
+      for (var i = 0; i < this.listaDefiniciones.length; i+=1) {
+          definiciones[i] = this.listaDefiniciones[i].evaluar(mapaArgumentos);
       }
       console.log("La lista de definiciones evaluadas formadas es:");
       console.log(definiciones);
