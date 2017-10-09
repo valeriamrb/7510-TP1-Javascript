@@ -17,12 +17,9 @@ function Parser() {
 
     this.parsearConsulta = function(expresion) {
       var vector1 = expresion.replace(/\)$/, "");
-      console.log("El vector1 es:");
-      console.log(vector1);
       var vector2 = vector1.split('(');
-      var vector3 = vector2[1].split(',');
-      console.log("El vector3 es:");
-      console.log(vector3);
+      //Separo por coma y espacio.
+      var vector3 = vector2[1].split(', ');
       return new Consulta(vector2[0], vector3);
     }
 

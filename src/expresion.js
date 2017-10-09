@@ -16,6 +16,10 @@ function Expresion(nombre, argumentos) {
           this.argumentos[i] = valor;
       }
     }
+
+    this.getNombre = function() {
+      return this.nombre;
+    }
 }
 
 module.exports = Expresion;

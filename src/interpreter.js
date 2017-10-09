@@ -1,39 +1,89 @@
 var Parser = require('../src/parser');
 
 var Interpreter = function () {
+    this.unParser = new Parser();
+    this.diccionarioDefiniciones = {};
+    this.diccionarioReglas = {};
 
     this.parseDB = function (params, paramss, paramsss) {
-    "Recibe una lista de definiciones y reglas en formato string."
-
-	//Paso la consulta a un formato interpretable.
-
-  	//Si la consulta esta bien formada la proceso.
-
-	//Recorro la lista para verificar si la base de datos es correcta.
-     var unParser = new Parser();
-     //console.log(unParser.saludo);
+    //Parseo la base de datos recibida como parametro.
+    //Creo un diccionario de definiciones y otro de reglas.
 
 	   for (var i = 0; i < params.length; i+=1) {
-	  //console.log("En el índice '" + i + "' hay este valor: " + params[i]);
-        if(unParser.esDefinicion(params[i]) == true) {
+        if(this.unParser.esDefinicion(params[i])) {
                 console.log("La linea '" + i + "es definicion");
-                console.log(unParser.parsearDefinicion(params[i]));
-        }
-        else if(unParser.esRegla(params[i]) == true) {
+                //console.log(this.unParser.parsearDefinicion(params[i]));
+                var definicion = this.unParser.parsearDefinicion(params[i]);
+                var clave = this.diccionarioDefiniciones[definicion.getNombre()];
+                if( clave == undefined ) {
+                  //Si no existe la definicion en el diccionario, la agrego dentro
+                  //de una lista asociada a el nombre de clave.
+                  this.diccionarioDefiniciones[definicion.getNombre()] = [definicion];
+                } else {
+                  //Si existe la definicion en el diccionario, la agrego a la lista
+                  //correspondiente.
+                  this.diccionarioDefiniciones[definicion.getNombre()].push(definicion);
+                }
+        } else if(this.unParser.esRegla(params[i])) {
                 console.log("La linea '" + i + "es regla");
-                console.log(unParser.parsearRegla(params[i]));
+                //console.log(this.unParser.parsearRegla(params[i]));
+                var unaRegla = this.unParser.parsearRegla(params[i]);
+                //console.log("####La regla es:");
+                //console.log(unaRegla.getNombre());
+                this.diccionarioReglas[unaRegla.getNombre()] = unaRegla;
         } else {
-            console.log("No soy nada");
+          //Base mal formada
+          return false;
         }
 	   }
+     console.log("El diccionario de definiciones es:");
+     console.log(this.diccionarioDefiniciones);
+     console.log("El diccionario de reglas es:");
+     console.log(this.diccionarioReglas);
     }
 
     this.checkQuery = function (params) {
         //Parseo la consulta.
-        var unParser = new Parser();
+        var consulta = this.unParser.parsearConsulta(params);
+        console.log("#######################################");
+        console.log("PROCESAMIENTO");
         console.log("La consulta es:");
-        console.log(unParser.parsearConsulta(params));
-        return true;
+        console.log(consulta);
+        var claveConsulta = consulta.getNombre();
+
+        //Busco si la consulta existe en el diccionario de definiciones.
+        var definiciones = this.diccionarioDefiniciones[claveConsulta];
+        if( definiciones != undefined){
+          console.log("Existe la definicion en el diccionario, su nombre es:");
+          console.log(claveConsulta);
+          //Recorro la lista de definiciones asociadas a esa clave para
+          //comparar si la consulta es verdadera.
+          for (var i = 0; i < definiciones.length; i+=1) {
+            console.log("Definicion nro:" + i);
+            if(definiciones[i].comparar(consulta)) {
+              //Si encontre la definicion, la consulta es verdadera.
+              console.log("La definicion es true.");
+              return true;
+            }
+          }
+          //Si no encontre la definicion, la consulta es falsa.
+          console.log("La definicion es false.");
+          return false;
+        } else {
+          //Si no existe la definicion, busco en el diccionario de reglas.
+          var regla = this.diccionarioReglas[claveConsulta];
+          if( regla != undefined){
+            //Si existe la regla, la evaluo para ver si la consulta es verdadera
+            if(regla.comparar(consulta, diccionarioDefiniciones)) {
+              //Si la regla evaluada da true, la consulta es verdadera
+              return true;
+            }
+            //Si la regla evaluada da false, la consulta es falsa
+            return false;
+          }
+          //Si no existe la regla, la consulta es falsa.
+          return false;
+        }
     }
 
 }
