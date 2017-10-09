@@ -86,11 +86,14 @@ function Parser() {
       //Valida si la base de datos esta formada correctamente.
       var listaDefValidas = [];
       var listaReglasValidas = [];
+      var elementoIncompleto = 0;
       for (var i = 0; i < listaDatos.length; i+=1) {
          if(this.esDefinicion(listaDatos[i])) {
            listaDefValidas.push(listaDatos[i]);
          } else if(this.esRegla(listaDatos[i])) {
            listaReglasValidas.push(listaDatos[i]);
+         } else {
+           elementoIncompleto = i;
          }
       }
       var cantidadDefValidas = listaDefValidas.length;
@@ -100,6 +103,7 @@ function Parser() {
       if(cantidadLineasTotales == cantidadLineasValidas){
         return true;
       }
+      console.log("Error en el elemento numero " + i + " de la base de datos");
       return false;
     }
 }

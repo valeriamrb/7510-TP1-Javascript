@@ -82,14 +82,16 @@ describe("Interpreter", function () {
 
     describe('Empty query', function () {
 
-        it('varon should be null', function () {
-            assert(interpreter.checkQuery('varon') === null);
+        it('varon should be raise Error', function () {
+            expect(function () {interpreter.checkQuery('varon');}).to.throw(Error).with.property('message', 'Consulta mal formada');
         });
-        it('maria should be null', function () {
-            assert(interpreter.checkQuery('maria') === null);
+        it('maria should be raise Error', function () {
+            expect(function () {interpreter.checkQuery('maria');}).to.throw(Error).with.property('message', 'Consulta mal formada');
+
         });
-        it('empty should be null', function () {
-            assert(interpreter.checkQuery('') === null);
+        it('empty should be raise Error', function () {
+            expect(function () {interpreter.checkQuery('');}).to.throw(Error).with.property('message', 'Consulta mal formada');
+
         });
     });
 });

@@ -46,7 +46,7 @@ var Interpreter = function () {
 
         //Verifico si la consulta es valida. Si no lo es retorno null
         if(!this.unParser.esConsultaValida(params)){
-          return null;
+          throw new Error("Consulta mal formada");
         }
         //Parseo la consulta.
         var consulta = this.unParser.parsearConsulta(params);
