@@ -51,7 +51,6 @@ function Parser() {
       "Obtengo un vector con dos posiciones, la primera es el nombre de la definicion y la segunda los argumentos."
       var vector1 = expresion.replace(/\)\.$/, "");
       var vector2 = vector1.split('(');
-
       //Creo una definicion
       return new Definicion(vector2[0], vector2[1]);
     }
@@ -103,7 +102,7 @@ function Parser() {
       if(cantidadLineasTotales == cantidadLineasValidas){
         return true;
       }
-      console.log("Error en el elemento numero " + i + " de la base de datos");
+      console.log("Error en el elemento numero " + i + " de la base de datos: " + listaDatos[i-1]);
       return false;
     }
 }

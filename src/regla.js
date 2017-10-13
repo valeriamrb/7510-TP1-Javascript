@@ -57,6 +57,10 @@ function Regla(nombre, argumentos, listaDefiniciones) {
     this.getNombre = function() {
       return this.nombre;
     }
+
+    this.getArgumentos = function() {
+      return this.argumentosGenericos;
+    }
 }
 
 module.exports = Regla;

@@ -32,7 +32,6 @@ describe("Interpreter", function () {
         // runs after each test in this block
     });
 
-
     describe('Interpreter Facts', function () {
 
         it('varon(juan) should be null', function () {

@@ -17,6 +17,10 @@ function Definicion(nombre, argumentos) {
       //Devuelve los argumentos en un string separados por coma.
       return this.argumentos.join(", ");
     }
+
+    this.getArgumentos = function() {
+      return this.argumentos;
+    }
 }
 
 module.exports = Definicion;
